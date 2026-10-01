@@ -21,7 +21,7 @@ test("Inputting Radio button", async ({page}) =>{
 
 });
 
-test.only ("Inputting Checkbox", async ({page}) => {
+test ("Inputting Checkbox", async ({page}) => {
 
     await page.goto("https://demo.automationtesting.in/Register.html");
     await page.getByRole('checkbox').nth(0).check();

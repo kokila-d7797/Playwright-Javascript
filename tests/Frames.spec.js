@@ -23,7 +23,7 @@ test ('Single Frame Access ', async ({page})=> {
 
 });
 
-test.only('Multiple frame access', async ({page}) => {
+test('Multiple frame access', async ({page}) => {
 
     await page.goto('https://app.thetestingacademy.com/playwright/frames/multi-frames');
 
