@@ -1,0 +1,10 @@
+{
+  "vehicleRegistration": {
+    "vehicleName": "Mahindra",
+    "ownerName": "Anushka",
+    "registrationNumber": "MH 20 NH 1234",
+    "year": "2025",
+    "vehicleType": "Sedan",
+    "notes": "Registration"
+  }
+}

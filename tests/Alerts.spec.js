@@ -1,13 +1,18 @@
-import {test,expect} from '@playwright/test'
+import {test,expect} from '@playwright/test';
+import alertsData from '../testdata/alertsData.json';
+
+test.describe ('Handling Alerts', () => {
+
+test.beforeEach(async ({page}) => {
+    await page.goto('https://the-internet.herokuapp.com/javascript_alerts');
+});
 
 test ('Alert with OK', async ({page})=> {
-
-    await page.goto('https://the-internet.herokuapp.com/javascript_alerts');
 
     //enabling dialog window handler
     page.on ('dialog', async dialog =>{
         expect(dialog.type()).toContain('alert');
-        expect(dialog.message()).toBe('I am a JS Alert');
+        expect(dialog.message()).toBe(alertsData.alert.message);
         await dialog.accept();
     });
 
@@ -16,12 +21,11 @@ test ('Alert with OK', async ({page})=> {
 });
 
 test ('Confirm Dialog', async({page}) => {
-    await page.goto('https://the-internet.herokuapp.com/javascript_alerts');
 
     //enabling dialog window handler
     page.on ('dialog', async dialog =>{
         expect(dialog.type()).toBe('confirm');
-        expect(dialog.message()).toBe('I am a JS Confirm');
+        expect(dialog.message()).toBe(alertsData.confirm.message);
         await dialog.accept();
     });
 
@@ -31,18 +35,16 @@ test ('Confirm Dialog', async({page}) => {
 
 test ('Prompt Dialog',async ({page}) => {
 
-    await page.goto('https://the-internet.herokuapp.com/javascript_alerts');
-    const userinput = 'Hello User';
-
     //enabling dialog window handler
     page.on ('dialog', async dialog =>{
         expect(dialog.type()).toBe('prompt');
-        expect(dialog.message()).toBe('I am a JS prompt');
-        await dialog.accept(userinput);
+        expect(dialog.message()).toBe(alertsData.prompt.message);
+        await dialog.accept(alertData.prompt.userInput);
         //await dialog.dismiss();
     });
 
     const alert = page.getByRole('button',{name:'Click for JS Prompt'});
     await alert.click();
     await expect (page.locator('#result')).toHaveText(`You entered: ${userinput}`);
+});
 });

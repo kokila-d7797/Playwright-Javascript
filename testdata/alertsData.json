@@ -1,0 +1,13 @@
+{
+  "alert": {
+    "message": "I am a JS Alert"
+  },
+  "confirm": {
+    "message": "I am a JS Confirm"
+  },
+  "prompt": {
+    "message": "I am a JS prompt",
+    "userInput": "Hello User",
+    "expectedResult": "You entered: Hello User"
+  }
+}
