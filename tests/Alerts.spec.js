@@ -4,7 +4,7 @@ import alertsData from '../testdata/alertsData.json';
 test.describe ('Handling Alerts', () => {
 
 test.beforeEach(async ({page}) => {
-    await page.goto('https://the-internet.herokuapp.com/javascript_alerts');
+    await page.goto('https://www.playwrightautomation.com/practice.html#section-alerts');
 });
 
 test ('Alert with OK', async ({page})=> {
@@ -16,8 +16,9 @@ test ('Alert with OK', async ({page})=> {
         await dialog.accept();
     });
 
-    const alert = page.getByRole('button',{name:'Click for JS Alert'});
+    const alert = page.getByRole('button', { name: 'Simple Alert' });
     await alert.click();
+    await expect(page.getByText('Alert accepted.', { exact: true })).toBeVisible();
 });
 
 test ('Confirm Dialog', async({page}) => {
@@ -29,22 +30,21 @@ test ('Confirm Dialog', async({page}) => {
         await dialog.accept();
     });
 
-    const alert = page.getByRole('button',{name:'Click for JS Confirm'});
+    const alert = page.getByRole('button', { name: 'Confirmation Alert' });
     await alert.click();
+    await expect(page.getByText('You pressed OK!', { exact: true })).toBeVisible();
 });
 
-test ('Prompt Dialog',async ({page}) => {
-
-    //enabling dialog window handler
-    page.on ('dialog', async dialog =>{
+test('Prompt Dialog', async ({ page }) => {
+    page.once('dialog', async dialog => {
         expect(dialog.type()).toBe('prompt');
         expect(dialog.message()).toBe(alertsData.prompt.message);
-        await dialog.accept(alertData.prompt.userInput);
-        //await dialog.dismiss();
+        await dialog.accept(alertsData.prompt.userInput);
     });
 
-    const alert = page.getByRole('button',{name:'Click for JS Prompt'});
-    await alert.click();
-    await expect (page.locator('#result')).toHaveText(`You entered: ${userinput}`);
+    await page.getByRole('button', { name: 'Prompt Alert' }).click();
+
+    await expect(page.getByTestId('prompt-result'))
+        .toHaveText(`Hello ${alertsData.prompt.userInput}! How are you today?`);
 });
 });

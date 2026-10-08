@@ -1,0 +1,15 @@
+{
+    "orangehrm":{
+        "Username": "Admin",
+        "Password": "admin123"
+    },
+    "swaglablockeduser": {
+        "Username": "locked_out_user",
+        "Password": "secret_sauce"
+    },
+    "swaglab": {
+        "Username": "standard_user",
+        "Password": "secret_sauce"
+    }
+
+}

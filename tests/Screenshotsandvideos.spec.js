@@ -1,4 +1,5 @@
 import {test,expect} from '@playwright/test';
+import logindata from '../testdata/login.json';
 
 //recording video for particular test
 test.use({
@@ -8,8 +9,8 @@ test.use({
 test('Handling Screenshots and videos', async ({page}) => {
 
     await page.goto('https://www.saucedemo.com/');
-    await page.getByPlaceholder('Username').fill('standard_user');
-    await page.getByPlaceholder('Password').fill('secret_sauce');
+    await page.getByPlaceholder('Username').fill(logindata.swaglab.Username);
+    await page.getByPlaceholder('Password').fill(logindata.swaglab.Password);
     await page.getByRole('button', { name: 'Login' }).click();
     await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
 

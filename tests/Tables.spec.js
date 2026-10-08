@@ -17,7 +17,7 @@ let page;
         console.log('Number of columns:',await columns.count());
         //searching for particular user row
         await page.getByRole('searchbox').fill(tablesData.tables.searchname);
-        await expect (await rows.toContainText('tablesData.tables.searchname'));
+        await expect (await rows.toContainText(tablesData.tables.searchname));
         await page.waitForTimeout(2000);
     })
 })
