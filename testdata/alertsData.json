@@ -1,0 +1,12 @@
+{
+  "alert": {
+    "message": "I am an alert box!"
+  },
+  "confirm": {
+    "message": "Press a button!"
+  },
+  "prompt": {
+    "message": "Please enter your name:",
+    "userInput": "User"
+  }
+}

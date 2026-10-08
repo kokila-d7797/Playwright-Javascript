@@ -1,0 +1,9 @@
+{
+  "registration": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "address": "123 Main Street, Chennai",
+    "email": "john.doe@example.com",
+    "phone": "9876543210"
+  }
+}

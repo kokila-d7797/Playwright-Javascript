@@ -1,8 +1,13 @@
 import {test,expect} from '@playwright/test';
 
+test.describe ('Handling Locators', ()=> {
+
+test.beforeEach(async ({page}) => {
+    await page.goto("https://demo.automationtesting.in/Register.html");
+});
+
 test("Inputting Textbox", async ({page}) => {
 
-    await page.goto ("https://demo.automationtesting.in/Register.html");
     await page.getByRole('textbox', { name: 'First Name' }).fill('John');
     await page.getByRole('textbox', { name: 'Last Name' }).fill('Doe');
     await page.locator('textarea:visible').fill('America');
@@ -13,7 +18,6 @@ test("Inputting Textbox", async ({page}) => {
 
 test("Inputting Radio button", async ({page}) =>{
 
-    await page.goto ("https://demo.automationtesting.in/Register.html");
     await page.getByLabel('Male', { exact: true }).check();
     await expect(await page.locator("input[value='Male']")).toBeChecked();
     await expect (await page.getByLabel('FeMale').isChecked()).toBeFalsy();
@@ -23,7 +27,6 @@ test("Inputting Radio button", async ({page}) =>{
 
 test ("Inputting Checkbox", async ({page}) => {
 
-    await page.goto("https://demo.automationtesting.in/Register.html");
     await page.getByRole('checkbox').nth(0).check();
     await page.getByRole('checkbox').nth(2).check();
     await page.waitForTimeout(2000);
@@ -35,4 +38,5 @@ test ("Inputting Checkbox", async ({page}) => {
     {
         await checkboxes.nth(i).check();
     }
-})
+});
+});

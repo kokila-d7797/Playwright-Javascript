@@ -1,34 +1,36 @@
-const {test,expect} = require ('@playwright/test')
+const {test} = require ('@playwright/test')
+const framesData = require('../testdata/framesData.json');
+
+test.describe ('Handling Frames', ()=> {
+
+test.beforeEach(async ({page}) => {
+    await page.goto('https://app.thetestingacademy.com/playwright/frames/');
+});
+
 
 test ('Single Frame Access ', async ({page})=> {
 
-    await page.goto('https://app.thetestingacademy.com/playwright/frames/');
-
-    const vehiclename = await page.frameLocator('#frame-one').getByLabel('Vehicle name');
-    await vehiclename.fill('Mahindra');
-    const ownername = await page.frameLocator('#frame-one').getByLabel('Owner name');
-    await ownername.fill('Anushka');
-    const registrationnum = await page.frameLocator('#frame-one').getByLabel('Registration number');
-    await registrationnum.fill('MH 20 NH 1234');
-    const year = await page.frameLocator('#frame-one').getByLabel('Year');
-    await year.fill('2025');
-    const vehicletypeoptions = await page.frameLocator('#frame-one').getByRole('combobox');
-    await vehicletypeoptions.selectOption('Sedan');
-    const notes = await page.frameLocator('#frame-one').getByLabel('Notes');
-    await notes.fill('Registration');
-
-    await page.waitForTimeout(2000);
-
+    const framename = page.frameLocator('#frame-one');
+    const vehiclename = await framename.getByLabel('Vehicle name');
+    await vehiclename.fill(framesData.vehicleRegistration.vehicleName);
+    const ownername = await framename.getByLabel('Owner name');
+    await ownername.fill(framesData.vehicleRegistration.vehicleName);
+    const registrationnum = await framename.getByLabel('Registration number');
+    await registrationnum.fill(framesData.vehicleRegistration.registrationNumber);
+    const year = await framename.getByLabel('Year');
+    await year.fill(framesData.vehicleRegistration.year);
+    const vehicletypeoptions = await framename.getByRole('combobox');
+    await vehicletypeoptions.selectOption(framesData.vehicleRegistration.vehicleType);
+    const notes = await framename.getByLabel('Notes');
+    await notes.fill(framesData.vehicleRegistration.notes);
     await page.frameLocator('#frame-one').getByRole('button', {name:'Submit registration'});
 
 });
 
 test('Multiple frame access', async ({page}) => {
 
-    await page.goto('https://app.thetestingacademy.com/playwright/frames/multi-frames');
-
     const allframes = page.frames();
     console.log('Count of frames:', allframes.length); //count cant be used because page.frames uses javascript array object
 
-    
+});  
 });

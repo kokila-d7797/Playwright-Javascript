@@ -1,8 +1,12 @@
 const { test, expect } = require('@playwright/test');
 
-test('SauceDemo - Hard Assertions', async ({ page }) => {
+test.describe ('Handling Assertions', ()=> {
 
+test.beforeEach(async ({page}) => {
     await page.goto('https://www.saucedemo.com/');
+});
+
+test('SauceDemo - Hard Assertions', async ({ page }) => {
 
     // Hard assertion - URL
     await expect(page).toHaveURL('https://www.saucedemo.com/');
@@ -16,7 +20,7 @@ test('SauceDemo - Hard Assertions', async ({ page }) => {
     await page.getByRole('button', { name: 'Login' }).click();
 
     // Hard assertion - Products page
-    await expect(page).toHaveURL(/inventory.htmls/);
+    await expect(page).toHaveURL(/inventory.html/);
 
     // Hard assertion - Products heading
     await expect(page.getByText('Products')).toBeVisible();
@@ -27,8 +31,6 @@ test('SauceDemo - Hard Assertions', async ({ page }) => {
 });
 
 test('SauceDemo - Soft Assertions', async ({ page }) => {
-
-    await page.goto('https://www.saucedemo.com/');
 
     // Soft assertion - URL
     await expect.soft(page).toHaveURL('https://www.saucedemo.com/');
@@ -53,4 +55,5 @@ test('SauceDemo - Soft Assertions', async ({ page }) => {
     // This will still execute even if previous soft assertions fail
     console.log('All soft assertions have been checked');
 
+});
 });

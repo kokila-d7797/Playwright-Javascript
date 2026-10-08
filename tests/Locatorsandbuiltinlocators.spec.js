@@ -1,54 +1,65 @@
 const { test, expect } = require('@playwright/test');
+const testData = require('../testdata/registerDataforlocators.json');
 
-test('Register form test using CSS ', async ({ page }) => {
+test.describe('Handling Locators', () => {
 
-    // Open website
-    await page.goto('https://demo.automationtesting.in/Register.html');
+    test.beforeEach(async ({ page }) => {
+        await page.goto('https://demo.automationtesting.in/Register.html');
+    });
 
-    // Assert URL
-    await expect(page).toHaveURL('https://demo.automationtesting.in/Register.html');
+    test('Register form test using CSS', async ({ page }) => {
 
-    // Assert Title
-    await expect(page).toHaveTitle('Register');
+        // Assert URL
+        await expect(page).toHaveURL(
+            'https://demo.automationtesting.in/Register.html'
+        );
 
-    // Enter First Name
-    await page.locator('input[placeholder="First Name"]').fill('John');
+        // Assert Title
+        await expect(page).toHaveTitle('Register');
 
-    // Enter Last Name
-    await page.locator('input[placeholder="Last Name"]').fill('Doe');
+        // Enter First Name
+        await page.locator('input[placeholder="First Name"]')
+            .fill(testData.registration.firstName);
 
-    // Enter Address
-    await page.locator('textarea[ng-model="Adress"]').fill('123 Main Street, Chennai');
+        // Enter Last Name
+        await page.locator('input[placeholder="Last Name"]')
+            .fill(testData.registration.lastName);
 
-    // Enter Email
-    await page.locator('input[type="email"]').fill('john.doe@example.com');
+        // Enter Address
+        await page.locator('textarea[ng-model="Adress"]')
+            .fill(testData.registration.address);
 
-    // Enter Phone
-    await page.locator('input[type="tel"]').fill('9876543210');
+        // Enter Email
+        await page.locator('input[type="email"]')
+            .fill(testData.registration.email);
 
-    await page.waitForTimeout(2000);
+        // Enter Phone
+        await page.locator('input[type="tel"]')
+            .fill(testData.registration.phone);
+    });
+
+
+    test('Register form test using Built-in Locators', async ({ page }) => {
+
+        // First Name
+        await page.getByPlaceholder('First Name')
+            .fill(testData.registration.firstName);
+
+        // Last Name
+        await page.getByPlaceholder('Last Name')
+            .fill(testData.registration.lastName);
+
+        // Address
+        await page.getByRole('textbox').nth(2)
+            .fill(testData.registration.address);
+
+        // Email
+        await page.getByRole('textbox').nth(3)
+            .fill(testData.registration.email);
+
+        // Phone
+        await page.getByRole('textbox').nth(4)
+            .fill(testData.registration.phone);
+    });
 
 });
-
-test ("Register form test using Built-in Locators", async({page})=> {
-   
-    // Open website
-    await page.goto('https://demo.automationtesting.in/Register.html')
-
-    // First Name
-    await page.getByPlaceholder('First Name').fill('John')
-
-    // Last Name
-    await page.getByPlaceholder('Last Name').fill('Doe')
-
-    // Address
-    await page.getByRole('textbox').nth(2).fill('123 Main Street, Chennai')
-
-    // Email
-    await page.getByRole('textbox').nth(3).fill('john.doe@example.com')
-
-    // Phone
-    await page.getByRole('textbox').nth(4).fill('9876543210')
-
-    await page.waitForTimeout(2000)
-})

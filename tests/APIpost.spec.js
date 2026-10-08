@@ -59,4 +59,4 @@ test("POST API token", async({request})=> {
     const statustext = await response.statusText();
     console.log('Status Text:', statustext);
     
-})
+});

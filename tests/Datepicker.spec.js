@@ -1,67 +1,82 @@
-import {test,expect} from '@playwright/test';
+import { test } from '@playwright/test';
+import dateData from '../testdata/datepickerData.json';
 
-test('Datepicker using HTML', async ({page}) => {
+test.describe('Handling Datepicker', () => {
 
-    await page.goto ('https://www.playwrightautomation.com/practice.html#section-datepicker-native');
+    test.beforeEach(async ({ page }) => {
+        await page.goto(
+            'https://www.playwrightautomation.com/practice.html#section-datepicker-native'
+        );
+    });
 
-    //filling DOB
-    const DOB = await page.getByLabel('Date of Birth', { exact: true });
-    await DOB.fill('2000-10-25');
-    await page.waitForTimeout(2000);
+    test('Datepicker using HTML', async ({ page }) => {
 
-    //filling passport issued date
-    const passportissuedate = await page.getByLabel('Passport Issued Date');
-    await passportissuedate.fill('2018-05-20');
-    await page.waitForTimeout(2000);
+        // Date of Birth
+        const DOB = page.getByLabel('Date of Birth', { exact: true });
+        await DOB.fill(dateData.htmlDatepicker.dateOfBirth);
 
-    //filling passport expiry date
-    const passportexpirydate = await page.getByLabel('Passport Expiry Date');
-    await passportexpirydate.fill('2028-05-10');
-    await page.waitForTimeout(2000);
+        // Passport Issued Date
+        const passportissuedate = page.getByLabel('Passport Issued Date');
+        await passportissuedate.fill(
+            dateData.htmlDatepicker.passportIssuedDate
+        );
 
-});
+        // Passport Expiry Date
+        const passportexpirydate = page.getByLabel('Passport Expiry Date');
+        await passportexpirydate.fill(
+            dateData.htmlDatepicker.passportExpiryDate
+        );
+    });
 
-test('UI Datepicker', async ({page}) => {
 
-    await page.goto('https://www.playwrightautomation.com/practice.html#section-datepicker-native');
+    test('UI Datepicker', async ({ page }) => {
 
-    const date = '20';
-    const monthyear = 'August 2020';
-    const monthYear = '2020-08';
-    await page.getByPlaceholder('Click to pick a date…').click();
-    while (true)
-    {
-        const currentyearmonth = await page.getByTestId('dp-arrow-month-label').textContent();
-        if (currentyearmonth==monthyear)
-        {
-            break;
+        const date = dateData.uiDatepicker.date;
+        const monthyear = dateData.uiDatepicker.monthYear;
+        const monthYear = dateData.uiDatepicker.monthYearValue;
+
+        await page.getByPlaceholder('Click to pick a date…').click();
+
+        while (true) {
+
+            const currentyearmonth =
+                await page.getByTestId('dp-arrow-month-label').textContent();
+
+            if (currentyearmonth === monthyear) {
+                break;
+            }
+
+            const previous = page.getByTestId('dp-arrow-prev');
+            await previous.click();
         }
-        const previous = page.getByTestId('dp-arrow-prev');
-        await previous.click();
-    }
-    //selecting date
-    //await page.locator(`td.dp-cell[data-date$="-${date}"]`).click();  //when passing only date its locating 7 element so going to month year date
-    await page.locator(`td.dp-cell[data-date="${monthYear}-${date}"]`).click();
-    await page.waitForTimeout(2000);
 
-});
+        // Select date
+        await page
+            .locator(`td.dp-cell[data-date="${monthYear}-${date}"]`)
+            .click();
+    });
 
-test ('Dropdown Datepicker', async ({page})=> {
 
-    await page.goto('https://www.playwrightautomation.com/practice.html#section-datepicker-native');
+    test('Dropdown Datepicker', async ({ page }) => {
 
-    const monthYear='2017-06';
-    const date='18'
-    //selecting month
-    const month = page.locator('#dp-dd-month:visible');
-    await month.selectOption('June');
+        const month = dateData.dropdownDatepicker.month;
+        const year = dateData.dropdownDatepicker.year;
+        const date = dateData.dropdownDatepicker.date;
+        const monthYear = dateData.dropdownDatepicker.monthYearValue;
 
-    //selecting year
-    const year = page.locator('#dp-dd-year');
-    await year.selectOption('2017');
+        // Select month
+        const monthLocator = page.locator('#dp-dd-month:visible');
+        await monthLocator.selectOption(month);
 
-    //selecting date
-    const dateselection = await page.locator(`td.dp-cell[data-date="${monthYear}-${date}"]`);
-    await dateselection.click();
-    await page.waitForTimeout(5000);
+        // Select year
+        const yearLocator = page.locator('#dp-dd-year');
+        await yearLocator.selectOption(year);
+
+        // Select date
+        const dateSelection =
+            page.locator(`td.dp-cell[data-date="${monthYear}-${date}"]`);
+
+        await dateSelection.click();
+    });
+
 });

@@ -1,0 +1,20 @@
+{
+  "htmlDatepicker": {
+    "dateOfBirth": "2000-10-25",
+    "passportIssuedDate": "2018-05-20",
+    "passportExpiryDate": "2028-05-10"
+  },
+
+  "uiDatepicker": {
+    "date": "20",
+    "monthYear": "August 2020",
+    "monthYearValue": "2020-08"
+  },
+
+  "dropdownDatepicker": {
+    "month": "June",
+    "year": "2017",
+    "date": "18",
+    "monthYearValue": "2017-06"
+  }
+}
