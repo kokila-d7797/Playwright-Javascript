@@ -1,0 +1,10 @@
+{
+  "product": {
+    "name": "Samsung galaxy s6",
+    "category": "Phones",
+    "price": "360"
+  },
+  "messages": {
+    "productAdded": "Product added"
+  }
+}
