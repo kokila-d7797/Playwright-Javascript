@@ -1,9 +1,10 @@
 const { test, expect } = require('@playwright/test');
+import traceURL from '../testdata/urlData.json';
 
 test.describe ('Handling Assertions', ()=> {
 
 test.beforeEach(async ({page}) => {
-    await page.goto('https://www.saucedemo.com/');
+    await page.goto(traceURL.traceviewerurl);
 });
 
 test('SauceDemo - Hard Assertions', async ({ page }) => {

@@ -1,11 +1,10 @@
 import {test,expect} from '@playwright/test';
 import tablesData from '../testdata/tablesData.json';
+import tableURL from '../testdata/urlData.json';
 
 test.describe('Handling Tables', ()=> {
-let page;
-    test.beforeEach(async ({browser}) => {
-        page=await browser.newPage();
-        await page.goto('https://practice.expandtesting.com/dynamic-pagination-table');
+    test.beforeEach(async ({page}) => {
+        await page.goto(tableURL.tableurl);
     });
 
     test ('Pagination Table', async({page}) => {
@@ -16,8 +15,7 @@ let page;
         const columns = table.locator('thead th');
         console.log('Number of columns:',await columns.count());
         //searching for particular user row
-        await page.getByRole('searchbox').fill(tablesData.tables.searchname);
-        await expect (await rows.toContainText(tablesData.tables.searchname));
-        await page.waitForTimeout(2000);
+        await page.getByLabel('Search:').fill(tablesData.searchname);
+        await expect (rows).toContainText(tablesData.searchname);
     })
 })

@@ -1,10 +1,11 @@
 import {test,expect} from '@playwright/test';
+import mouseData from '../testdata/urlData.json';
 
 test ('Handling Mouse Actions', async ({page}) => {
-    await page.goto ('https://www.playwrightautomation.com/practice.html#section-mouse');
+    await page.goto (mouseData.mouseurl);
 
     //mouse hover action
-    const hoverbutton = await page.getByRole('button', {name:'Point Me'});
+    const hoverbutton = page.getByRole('button', {name:'Point Me'});
     await hoverbutton.hover();
     const options = page.locator('#hover-dropdown a');
     const actualOptions = await options.allTextContents();
@@ -24,15 +25,15 @@ test ('Handling Mouse Actions', async ({page}) => {
     await expect(page.getByTestId('context-menu-result')).toContainText('Copy');
 
     //mouse double click 
-    const doubleclickcopy = await page.getByRole('button', {name:'Copy Text'});
+    const doubleclickcopy = page.getByRole('button', {name:'Copy Text'});
     await doubleclickcopy.dblclick();
     await expect(page.getByRole('textbox', { name: 'Field 2 (target)' })).toHaveValue('Hello Automation!');
 
     //mouse drag and drop
-    const washington= await page.getByText('Washington', { exact: true });
-    const USA = await page.getByTestId('drop-usa');
+    const washington= page.getByText('Washington', { exact: true });
+    const USA = page.getByTestId('drop-usa');
     await washington.dragTo(USA);
-    await expect(page.getByText(/Matched: 1 \/ 3/)).toBeVisible();
+    await expect(page.getByText('1 / 3', { exact: true })).toBeVisible();
 
     //mouse sliding action
     const slider = page.locator('#price-slider');

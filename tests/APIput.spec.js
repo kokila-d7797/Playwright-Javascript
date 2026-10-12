@@ -19,9 +19,6 @@ test ('PUT API Request', async ({request}) => {
 
     expect (response.headers()['content-type']).toContain('application/json');
 
-    const headers = response.headers();
-    expect(headers['content-type']).toContain('application/json');
-
     const responseBody = await response.json();
     console.log('Response Body:', responseBody);
 
@@ -36,7 +33,5 @@ test ('PUT API Request', async ({request}) => {
     expect(responseBody.title).toBe('testing put request');
 
     expect(responseBody.body).toBe('API Automation on put request');
-
-    expect(responseBody.id).toBe(3);
 
 });

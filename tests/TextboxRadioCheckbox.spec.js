@@ -1,9 +1,10 @@
 import {test,expect} from '@playwright/test';
+import checkURL from '../testdata/urlData.json';
 
 test.describe ('Handling Locators', ()=> {
 
 test.beforeEach(async ({page}) => {
-    await page.goto("https://demo.automationtesting.in/Register.html");
+    await page.goto(checkURL.textradiocheckurl);
 });
 
 test("Inputting Textbox", async ({page}) => {
@@ -20,19 +21,16 @@ test("Inputting Radio button", async ({page}) =>{
 
     await page.getByLabel('Male', { exact: true }).check();
     await expect(await page.locator("input[value='Male']")).toBeChecked();
-    await expect (await page.getByLabel('FeMale').isChecked()).toBeFalsy();
-    await page.waitForTimeout(2000);
-
+    expect (await page.getByLabel('FeMale').isChecked()).toBeFalsy();
 });
 
 test ("Inputting Checkbox", async ({page}) => {
 
     await page.getByRole('checkbox').nth(0).check();
     await page.getByRole('checkbox').nth(2).check();
-    await page.waitForTimeout(2000);
 
     //selecting all checkboxes
-    const checkboxes = await page.getByRole('checkbox');
+    const checkboxes = page.getByRole('checkbox');
     const count = await checkboxes.count();
     for(let i=0; i<count; i++)
     {

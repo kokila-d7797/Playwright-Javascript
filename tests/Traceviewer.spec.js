@@ -1,5 +1,6 @@
 import {test,expect} from '@playwright/test';
 import logindata from '../testdata/login.json';
+import traceURL from '../testdata/urlData.json';
 
 test.use({
     trace:'on' 
@@ -7,7 +8,7 @@ test.use({
 
 test('Trace Viewer', async ({page}) => {
 
-    await page.goto('https://www.saucedemo.com/');
+    await page.goto(traceURL.traceviewerurl);
     await page.getByPlaceholder('Username').fill(logindata.swaglablockeduser.Username);
     await page.getByPlaceholder('Password').fill(logindata.swaglablockeduser.Password);
     await page.getByRole('button', { name: 'Login' }).click();
